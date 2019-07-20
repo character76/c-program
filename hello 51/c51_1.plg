@@ -1,0 +1,81 @@
+<html>
+<body>
+<pre>
+<h1>µVision2 Build Log</h1>
+<h2>Project:</h2>
+C:\Users\31324\Desktop\c program\hello 51\c51_1.uv2
+Project File Date:  02/09/2019
+
+<h2>Output:</h2>
+Build target 'Target 1'
+compiling c51-1.c...
+C51-1.C(1): warning C500: MISSING DEVICE (SECURITY KEY NOT FOUND)
+C51-1.C(10): error C202: 'qti_left': undefined identifier
+C51-1.C(17): error C202: 'p1': undefined identifier
+C51-1.C(21): error C202: 'p1': undefined identifier
+Target not created
+Build target 'Target 1'
+compiling c51-1.c...
+C51-1.C(1): warning C500: MISSING DEVICE (SECURITY KEY NOT FOUND)
+C51-1.C(10): error C202: 'qti_left': undefined identifier
+Target not created
+Build target 'Target 1'
+compiling c51-1.c...
+C51-1.C(1): warning C500: MISSING DEVICE (SECURITY KEY NOT FOUND)
+C51-1.C(10): error C202: 'qti_left': undefined identifier
+Target not created
+Build target 'Target 1'
+compiling c51-1.c...
+C51-1.C(1): warning C500: MISSING DEVICE (SECURITY KEY NOT FOUND)
+C51-1.C(10): warning C206: 'qti_left': missing function-prototype
+C51-1.C(10): warning C206: 'qti_right': missing function-prototype
+C51-1.C(6): warning C280: 'a': unreferenced local variable
+linking...
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_GETKEY?C51_1
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?FORWARD?C51_1
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?RIGHT?C51_1
+Program Size: data=60.3 xdata=0 code=1472
+creating hex file from "c51_1"...
+"c51_1" - 0 Error(s), 7 Warning(s).
+Build target 'Target 1'
+compiling c51-1.c...
+C51-1.C(1): warning C500: MISSING DEVICE (SECURITY KEY NOT FOUND)
+C51-1.C(6): warning C280: 'a': unreferenced local variable
+linking...
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_PUTCHAR?C51_1
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_GETKEY?C51_1
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?QTI_RIGHT?C51_1
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?QTI_LEFT?C51_1
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?FORWARD?C51_1
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?RIGHT?C51_1
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?LEFT?C51_1
+Program Size: data=39.2 xdata=0 code=460
+creating hex file from "c51_1"...
+"c51_1" - 0 Error(s), 9 Warning(s).
+Build target 'Target 1'
+compiling c51-1.c...
+C51-1.C(1): warning C500: MISSING DEVICE (SECURITY KEY NOT FOUND)
+C51-1.C(10): warning C206: 'qti_right': missing function-prototype
+C51-1.C(10): warning C206: 'qti_left': missing function-prototype
+C51-1.C(12): warning C206: 'forward': missing function-prototype
+C51-1.C(16): warning C206: 'right': missing function-prototype
+C51-1.C(20): warning C206: 'left': missing function-prototype
+C51-1.C(6): warning C280: 'a': unreferenced local variable
+linking...
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_PUTCHAR?C51_1
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_GETKEY?C51_1
+Program Size: data=39.2 xdata=0 code=514
+creating hex file from "c51_1"...
+"c51_1" - 0 Error(s), 9 Warning(s).

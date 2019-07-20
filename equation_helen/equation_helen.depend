@@ -1,0 +1,6 @@
+# depslib dependency file v1.0
+1537074163 source:c:\users\31324\desktop\c program\equation_helen\main.c
+	<stdio.h>
+	<stdlib.h>
+	<math.h>
+
