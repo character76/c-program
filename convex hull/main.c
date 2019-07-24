@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #define OUTPUT_SUCCESS 1
 
 
@@ -59,7 +60,7 @@ Point* random_point(int num,int x_len,int y_len)
 {
     int data_len=sizeof(Point);
     
-    Point* points=malloc(data_len*num+1);
+    Point* points=malloc(data_len*num+1);//add 1 more in case of 
     for(int i=0;i<num;i++)
     {
         points[i].x=rand()%x_len+1;
@@ -135,11 +136,11 @@ float slope(Point a,Point b)
     float delta_y=a.y-b.y;
     if(delta_x==0&&delta_y>0)
     {
-        return 1;
+        return 1.00;
     }
     else if(delta_x==0&&delta_y<0)
     {
-        return -1;
+        return -1.00;
     }
     return delta_y/delta_x;
 }
@@ -161,8 +162,11 @@ Point* begin_point(Point* points,int len)
         return points;
     }
     int* hull_up_points=malloc(sizeof(int)*len+1);
+    memset(hull_up_points,0,sizeof(int)*len+1);
     int* hull_down_points=malloc(sizeof(int)*len+1);
-    Point* hull_points=malloc(sizeof(Point)*len);//used to merge two up/down point set
+    memset(hull_down_points,0,sizeof(int)*len+1);
+    Point* hull_points=malloc(sizeof(Point)*len*2);//used to merge two up/down point set
+    memset(hull_points,0,sizeof(Point)*len*2);
     hull_up_points[0]=0;
     int hull_up_state=0;
     int hull_up_count=1;//to count how many effective element hull_up_points have
@@ -176,14 +180,14 @@ Point* begin_point(Point* points,int len)
 
         if(hull_up_points[i]<=len-1&&i<=len-1)//haven't reach the rightmost point
         {
-            hull_up_points[i+1]=Up_nextp(&points[i],hull_up_points[i],len-1);//left point shouldn't be like this
+            hull_up_points[i+1]=Up_nextp(points,hull_up_points[i],len-1);//left point shouldn't be like this
             hull_up_state=hull_up_points[i+1];
             
             hull_up_count++;
         }
         if(hull_up_points[i]<=len-1)
         {
-            hull_down_points[i+1]=Down_nextp(&points[i],hull_down_points[i],len-1);
+            hull_down_points[i+1]=Down_nextp(points,hull_down_points[i],len-1);
             hull_down_state=hull_down_points[i+1];
             hull_down_count++;
         }
@@ -211,13 +215,16 @@ Point* begin_point(Point* points,int len)
             } */
         if(hull_up_points[i]==len-1&&hull_up_points[i]==len-1)//both up&&down function reach the rightmost point
         {
-            printf("element=%d",hull_up_count+hull_down_count);
+            
             hull_points[0]=points[0];
             int i;//counter var
             for(i=1;i<hull_up_count;i++)
             {
                 if(hull_up_points[i]>len-1)
-                break;
+                {
+                    free(hull_up_points);
+                    break;
+                }
                 hull_points[i]=points[hull_up_points[i]];
                 
             }
@@ -225,14 +232,17 @@ Point* begin_point(Point* points,int len)
             for(int j=i+1;j<(hull_up_count+hull_down_count);j++)
             {
                 if(hull_up_points[j-i]>len-1)
-                break;
-                hull_points[j]=points[hull_down_points[j-i]];
+                {
+                    free(hull_down_points);
+                    break;
+                }
+                hull_points[j]=points[hull_down_points[j-(i+1)]];//fault
             }
             break;
 
         }
     }
-    printf("  counter num:%d,%d  \n",hull_up_count,hull_down_count);
+    
     return hull_points;
 }
 int Up_nextp(Point* points,int now_point,int left)//before the rightmost point
@@ -240,22 +250,20 @@ int Up_nextp(Point* points,int now_point,int left)//before the rightmost point
     Point base_point = points[now_point];
     
     int max_index=now_point+1;//to store the highest slope point's index
-    float s_last = slope(points[max_index],base_point);
-  
+    float s_last = slope(base_point,points[max_index]);
+    
     float s_now;
     if(now_point==left)
     {
         return left;
     }
-    for(int i=2;i<=left;i++)
+    for(int i=now_point+2;i<=left;i++)
     {
-        s_now=slope(points[i],base_point);
+        s_now=slope(base_point,points[i]);
         if(s_now>=s_last&&i<=left)//should include equal
         {
             max_index=i;
             s_last=slope(base_point,points[max_index]);
-            if(i==left)
-            printf("got\n");
         }
         
         else if(i==left&&s_now<s_last)
@@ -268,7 +276,7 @@ int Up_nextp(Point* points,int now_point,int left)//before the rightmost point
         }
 
     }
-    printf("hull up points:[%d,%d] \n ",points[max_index].x,points[max_index].y);
+    
     return max_index;
 };
 int Down_nextp(Point* points,int now_point,int left)
@@ -282,9 +290,9 @@ int Down_nextp(Point* points,int now_point,int left)
     {
         return left;
     }
-    for(int i=2;i<=left;i++)
+    for(int i=now_point+2;i<=left;i++)
     {
-        s_now=slope(points[i],base_point);
+        s_now=slope(base_point,points[i]);
         if(s_now<=s_last&&i<=left)//should include equal
         {
             min_index=i;
@@ -300,6 +308,8 @@ int Down_nextp(Point* points,int now_point,int left)
             continue;
         }
     }
-    printf("hull down points:(%d,%d) \n ",points[min_index].x,points[min_index].y);
+    
     return min_index;
 };
+
+
