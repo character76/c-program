@@ -3,7 +3,10 @@
 #include <string.h>
 #define OUTPUT_SUCCESS 1
 
-
+/*
+[30,27],#WRONG
+[31,6],#wrong
+ */
 //Graham Scan Algorithm
 /*
 there seems to be another methods using vector cross-product
@@ -31,18 +34,21 @@ int main()
     int point_size=sizeof(Point);
     int compare_func(const void* a,const void* b);
     unsigned int point_num=20;
-    Point* random_point(int num,int x_len,int y_len);
+    Point* random_point(int num,int x_len,int y_len,int random_seed);
     int check_point(Point* a,int len);
     void print_points(Point* points,int len);
-
-    Point* points=random_point(point_num,50,50);
+    int random_seed;
+    scanf("%d",&random_seed);
+    Point* points=random_point(point_num,50,50,random_seed);
     printf("data size of Point%d",point_size);
     print_points(points,point_num);
     qsort(points,point_num,sizeof(Point),compare_func);
     printf("after sort\n");
     print_points(points,point_num);
+    printf("_______________\n");
     points=begin_point(points,point_num);
     print_ans(points,point_num);
+    while(scanf("%c")==0);
     return 0;
 }
 
@@ -56,10 +62,10 @@ int check_point(Point* a,int len)
     return 1;
 }
 
-Point* random_point(int num,int x_len,int y_len)
+Point* random_point(int num,int x_len,int y_len,int random_seed)
 {
     int data_len=sizeof(Point);
-    
+    srand(random_seed);
     Point* points=malloc(data_len*num+1);//add 1 more in case of 
     for(int i=0;i<num;i++)
     {
@@ -181,6 +187,7 @@ Point* begin_point(Point* points,int len)
         if(hull_up_points[i]<=len-1&&i<=len-1)//haven't reach the rightmost point
         {
             hull_up_points[i+1]=Up_nextp(points,hull_up_points[i],len-1);//left point shouldn't be like this
+
             hull_up_state=hull_up_points[i+1];
             
             hull_up_count++;
@@ -188,6 +195,7 @@ Point* begin_point(Point* points,int len)
         if(hull_up_points[i]<=len-1)
         {
             hull_down_points[i+1]=Down_nextp(points,hull_down_points[i],len-1);
+
             hull_down_state=hull_down_points[i+1];
             hull_down_count++;
         }
@@ -236,7 +244,7 @@ Point* begin_point(Point* points,int len)
                     free(hull_down_points);
                     break;
                 }
-                hull_points[j]=points[hull_down_points[j-(i+1)]];//fault
+                hull_points[j]=points[hull_down_points[j-(i+1)]];
             }
             break;
 
@@ -298,7 +306,6 @@ int Down_nextp(Point* points,int now_point,int left)
             min_index=i;
             s_last=slope(base_point,points[min_index]);
         }
-     
         else if(i==left&&s_now>s_last)
         {
             break;//reached end
