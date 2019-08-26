@@ -2,8 +2,7 @@
 #include<stdio.h>
 
 typedef struct{
-    int data;
-    int depth;
+    int value;
     struct Binary* left;
     struct Binary* right;
 }Binary;
@@ -11,28 +10,70 @@ typedef struct{
 int main()
 {
     
+    Binary* tree_init();
+
     return 1;
 };
+Binary* tree_init()
+{
+    Binary* head_node;
+    head_node=caloc(1,sizeof(Binary));
+    head_node->left=NULL;
+    head_node->right=NULL;
+    head_node->value=65565;
+}
 
-Binary* create_tree(Binary* begin_point,int depth)
+void free_tree(Binary* node)
 {
-    begin_point=malloc(sizeof(Binary));
-    if(depth==0)
+    if(node==NULL)
     {
-        begin_point[0].left=NULL;
-        begin_point[0].right=NULL;
-        return begin_point;
+        return NULL;        
     }
-    begin_point[0].left=create_tree(begin_point[0].left,depth-1);
-    begin_point[0].right=create_tree(begin_point[0].right,depth-1);
-    return begin_point;
-};
-Binary* free_tree(Binary* begin_point)
+    if(node!=NULL)
+    {
+        Binary* next_l=free_tree(node->left);
+        free(next_l);
+
+        Binary* next_r=free_tree(node->right);
+        free(next_r);
+    }
+    
+}
+Binary* create_node(Binary* node)
 {
-    if(begin_point[0].left)
+    if(node==NULL)
     {
-        
+        node=malloc(sizeof(Binary));
+        node->left=NULL;
+        node->right=NULL;
+        return node;
     }
+    else return NULL;
+}
+Binary* tree_insert(Binary* node,int key)
+{
+    Binary* next_node;
+    if(node->value==key)
+    return node;
+    if(node->value>key&&node->right==NULL)
+    {
+        next_node=create_node(node->left);
+        return next_node;
+    }
+    else if(node->value>key&&node->right!=NULL)
+    {
+        return tree_insert(node->left,key);
+    }
+    if(node->value<key&&node->left==NULL)
+    {
+        next_node=create_node(node->right);
+        return next_node;
+    }
+    else if(node->value<key&&node->left!=NULL)
+    {
+        return tree_insert(node->right,key);
+    }
+    else return NULL;
 }
 int print_tree(Binary* begin,int depth,int* data)
 {
