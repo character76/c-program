@@ -3,21 +3,30 @@
 
 int main()
 {
-    int a;
-    printf("Hello world!\n");
-    int input_num(int a,int b);
-    a=input_num(60,30);
-    printf("%d",a);
+    int ex_gcd(int a,int b,int* x,int* y);
+    int a,b,r;
+    printf("enter a,b:");
+    scanf("%d %d",&a,&b);
+    int x=0,y=0;
+    r=ex_gcd(a,b,&x,&y);
+    printf("ans:%d,%d,greatest common divsor:%d",x,y,r);
     return 0;
 }
-int input_num(int a,int b)
+int ex_gcd(int a,int b,int* x,int* y)
 {
-    if (a%b !=0)
+    printf("x:%d,*x:%d\n",x,*x);
+    if (b ==0)
     {
-        input_num(b,a%b);
+        *x=1;
+        *y=0;
+        return a;
     }
-    else if(a%b==0)
-    {
-        return b;
-    }
+    int r=ex_gcd(b,a%b,x,y);
+    int c=*x;
+    *x=*y;
+    *y=c-(a/b)*(*y);
+    return r;
+    
+
 }
+
