@@ -1,24 +1,26 @@
 #include<iostream>
 #include<queue>
-#define __DEBUG__
+
 
 using namespace std;
 typedef struct{
     int x;
     int y;
 }point;
-void bfs(int **p,int n,int x,int y);
-void bfs_begin(int **p,int n);
+int p[30][30];
+void bfs(int n,int x,int y);
+void bfs_begin(int n);
 int main()
 {
-    void print_s(int **p,int n);
+    void print_s(int n);
     int n;
-    int** p;
+    
     cin>>n;
-    p=new int* [n];
+    
+        
     for(int i=0;i<n;i++)
     {
-        p[i]=new int[n];
+        
         for(int q=0;q<n;q++)
         {
             cin>>p[i][q];
@@ -27,11 +29,11 @@ int main()
     #ifdef __DEBUG__
     cout<<"begin---"<<endl;
     #endif
-    bfs_begin(p,n);
-    print_s(p,n);
+    bfs_begin(n);
+    print_s(n);
     return 0;
 }
-void bfs_begin(int **p,int n)
+void bfs_begin(int n)
 {
     int x,y,j=0;
     for(int i=0;i<n;i++)
@@ -51,17 +53,17 @@ void bfs_begin(int **p,int n)
     #ifdef __DEBUG__
         cout<<"begin:"<<x<<","<<y<<endl;
         #endif
-    bfs(p,n,x,y);
+    bfs(n,x,y);
 
 }
-void bfs(int **p,int n,int x,int y)
+void bfs(int n,int x,int y)
 {
     queue<point> go;
     int now_x,now_y;
     point begin,now;
     begin.x=x;
     begin.y=y;
-    p[x][y]==2;
+    p[x][y]=2;
     go.push(begin);
     while(!go.empty())
     {
@@ -71,7 +73,7 @@ void bfs(int **p,int n,int x,int y)
         #ifdef __DEBUG__
         cout<<"go:"<<now_x<<","<<now_y<<endl;
         #endif
-        if(p[now_x-1][now_y]==0)
+        if(p[now_x-1][now_y]==0&&now_x-1>=0&&now_y>=0&&now_x-1<=n-1&&now_y<=n-1)
         {
             now.x=now_x-1;
             now.y=now_y;
@@ -79,21 +81,21 @@ void bfs(int **p,int n,int x,int y)
             p[now_x-1][now_y]=2;
         }
         
-        if(p[now_x][now_y+1]==0)
+        if(p[now_x][now_y+1]==0&&now_x>=0&&now_y+1>=0&&now_x<=n-1&&now_y+1<=n-1)
         {
             now.x=now_x;
             now.y=now_y+1;
             go.push(now);
             p[now_x][now_y+1]=2;
         }
-        if(p[now_x+1][now_y]==0)
+        if(p[now_x+1][now_y]==0&&now_x+1>=0&&now_y>=0&&now_x+1<=n-1&&now_y<=n-1)
         {
             now.x=now_x+1;
             now.y=now_y;
             go.push(now);
             p[now_x+1][now_y]=2;
         }
-        if(p[now_x][now_y-1]==0)
+        if(p[now_x][now_y-1]==0&&now_x>=0&&now_y-1>=0&&now_x<=n-1&&now_y-1<=n-1)
         {
             now.x=now_x;
             now.y=now_y-1;
@@ -108,7 +110,7 @@ void bfs(int **p,int n,int x,int y)
   2
 */
 
-void print_s(int **p,int n)
+void print_s(int n)
 {
     for(int i=0;i<n;i++)
     {
